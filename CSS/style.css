@@ -1,0 +1,108 @@
+:root {
+  --ink: #f4f3f0;
+  --dim: rgba(244, 243, 240, .60);
+  --line-2: rgba(255, 255, 255, .20);
+  --pad: clamp(20px, 3.4vw, 52px);
+}
+
+* { box-sizing: border-box;  padding: 0; margin: 0; }
+a { color: inherit; text-decoration: none;}
+
+/* Navbar Container */
+.nav {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  padding: clamp(18px, 2.3vw, 28px) var(--pad);
+  background-color: #1f1f21;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  letter-spacing: -.022em;
+  font-size: 20px;
+  flex: 0 0 auto;
+  color: #f4f3f0;
+  text-decoration: none;
+}
+.logo svg {
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+}
+
+/* Right Side Actions */
+.navend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 22px);
+}
+.navend .sign {
+  font-size: 14.5px;
+  color: var(--dim);
+  transition: color .2s ease;
+  text-decoration: none;
+}
+.navend .sign:hover {
+  color: var(--ink);
+}
+
+/* Buttons */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-weight: 500;
+  letter-spacing: -.012em;
+  white-space: nowrap;
+  transition: transform .3s cubic-bezier(.2,.7,.3,1), background .25s ease, border-color .25s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.sm {
+  font-size: 14px;
+  padding: 9px 17px;
+}
+.btn.solid {
+  background: var(--ink);
+  color: #17171a;
+}
+.btn.solid:hover {
+  background: #fff;
+}
+
+/* Responsive query: hide center links on smaller screens */
+@media (max-width: 420px) {
+  .btn{
+    display: none;
+  }
+}
+
+.hero-section{
+    height: 90vh;
+    background-image: url('/Task-Management-Dashboard/Assets/img/Gemini_Generated_Image_x90od9x90od9x90o.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-section-heading{
+    font-size: 32px;
+    font-weight: bold;
+    font-family: sans-serif;
+
+}
+
+.hero-section-subheading{
+    font-size: 16px;
+    font-weight: normal;
+    font-family: sans-serif;
+}

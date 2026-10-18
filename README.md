@@ -4,3 +4,4 @@
 - Hero section with a heading , subheading and get started button.
 - Giving ID to sign in button 
 - Adding a modal card to give data for sign in. 
+- Added Sign up section for new user.

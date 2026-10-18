@@ -190,3 +190,9 @@ a { color: inherit; text-decoration: none;}
 .btn-submit:hover {
     background: #0b5ed7;
 }
+
+
+/* Registration Section */
+.form-group input {
+    font-size: 19px;
+}

@@ -7,3 +7,6 @@
 - Added Sign up section for new user.
 - Replace the Get Started button with an anchor element.
 - Implement jump links to user-registration-section. 
+- Handles client-side(script.js) interactivity and managing the asynchronous user registration form submission.
+- POST request to the backend API with error/success feedback.
+- Configures the Express backend server (server.js), initializes the SQLite database (taskFlow.db), sets up CORS and JSON middleware, and provides a secure user sign-up endpoint with validation and password hashing via bcrypt.

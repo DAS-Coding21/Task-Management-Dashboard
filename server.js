@@ -45,9 +45,9 @@ initializeDBAndServer();
 
 // Sign Up Endpoint
 app.post('/users/register/', async (req, res) => {
-    const { username, name, email, password } = req.body;
+    const { signUpUsername, name, email, password } = req.body;
 
-    if (!username || !name || !email || !password) {
+    if (!signUpUsername || !name || !email || !password) {
         return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
@@ -74,12 +74,12 @@ app.post('/users/register/', async (req, res) => {
                 VALUES (?, ?, ?, ?);
             `;
 
-            const userDetails = await db.run(createUser, [username, name, email, hashedPassword]);
+            const userDetails = await db.run(createUser, [signUpUsername, name, email, hashedPassword]);
 
             return res.status(200).json({
                 success: true,
                 message: 'User registered successfully!',
-                user: { id: userDetails.lastID, username, name, email }
+                user: { id: userDetails.lastID, signUpUsername, name, email }
             });
         } else {
             return res.status(400).json({ success: false, message: 'User with this email already exists.' });
@@ -89,3 +89,41 @@ app.post('/users/register/', async (req, res) => {
         return res.status(500).json({ success: false, message: 'Internal server error.' });
     }
 });
+
+// Sign In Endpoint
+app.post('/users/login/', async (req, res) =>{
+    const {signInUsernameVal, userPaswordVal} = req.body;
+
+    const getUserQuery = `SELECT * FROM users WHERE username = ?`;
+    const existingUser = await db.get(getUserQuery, [signInUsernameVal]);
+
+    if(!signInUsernameVal || !userPaswordVal){
+        return res.status(400).json({ success: false, message: 'All fields are required.' });
+    }
+
+    if(existingUser === undefined){
+        // alert("Invalid User Id");
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid User ID'
+        });
+    }
+    else {
+        const compareHashedPassword = await bcrypt.compare(userPaswordVal, existingUser.password);
+        if(compareHashedPassword === true){
+            // alert("Login Successfully");
+            return res.status(200).json({
+                success: true,
+                message: 'Login Successfully'
+            });
+        }
+        else{
+            // alert("Incorrect Password");
+            return res.status(400).json({
+                success: false,
+                message: 'Incorrect Password'
+            });
+        }
+    }
+
+})

@@ -20,12 +20,13 @@ if (registrationFormEl) {
   registrationFormEl.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const username = document.getElementById("username").value.trim();
+    const signUpUsername = document.getElementById("signUpUsername").value.trim();
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    const formData = { username, name, email, password };
+    const formData = { signUpUsername, name, email, password };
+    console.log(formData);
 
     try {
       const response = await fetch("http://localhost:3000/users/register/", {
@@ -38,11 +39,11 @@ if (registrationFormEl) {
 
       const responseResult = await response.json();
 
-      if(responseResult.success){
+      if (responseResult.success) {
         console.log(responseResult.message);
         alert('User resgister successfully');
       }
-      else{
+      else {
         console.log(responseResult.message);
         alert(responseResult.message);
       }
@@ -52,4 +53,44 @@ if (registrationFormEl) {
       console.error("Error registering user:", error);
     }
   });
+}
+
+// User Sign-in Form
+const signInFormEl = document.getElementById('signInForm');
+
+if (signInFormEl) {
+  signInFormEl.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const signInUsernameVal = document.getElementById('signInUsername').value;
+    const userPaswordVal = document.getElementById('userPasword').value;
+
+    const formData = { signInUsernameVal, userPaswordVal };
+    console.log(formData);
+
+    try {
+      const response = await fetch("http://localhost:3000/users/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const responseResult = await response.json();
+      console.log(responseResult);
+
+      if(responseResult.success){
+        console.log(responseResult.message);
+        alert(responseResult.message);
+      }
+      else{
+        console.log(responseResult.message);
+        alert(responseResult.message);
+      }
+    } catch (error) {
+      alert("An error occurred: " + error.message);
+      console.error("Error registering user:", error);
+    }
+  })
 }

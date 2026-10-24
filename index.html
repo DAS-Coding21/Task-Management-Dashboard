@@ -45,14 +45,14 @@
         <div class="modal-card">
             <button id="closeLoginBtn" class="close-btn">&times;</button>
             <h2 class="text-center p-3">Sign In</h2>
-            <form>
+            <form id="signInForm">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" placeholder="Enter your username" required>
+                    <input type="text" id="signInUsername" class="form-control" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="userPasword" class="form-control" placeholder="Enter your password">
                 </div>
                 <div class="text-center mt-4">
                     <button class="btn btn-primary rounded-pill submit-btn">Sign In</button>
@@ -68,7 +68,7 @@
                     <form id="registrationForm">
                         <div class="form-group mb-3">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter your username"
+                            <input type="text" class="form-control" id="signUpUsername" placeholder="Enter your username"
                                 >
                         </div>
                         <div class="form-group mb-3">

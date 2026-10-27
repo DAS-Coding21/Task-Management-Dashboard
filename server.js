@@ -114,7 +114,13 @@ app.post('/users/login/', async (req, res) =>{
             // alert("Login Successfully");
             return res.status(200).json({
                 success: true,
-                message: 'Login Successfully'
+                message: 'Login Successfully',
+                user: {
+                    id: existingUser.id,          
+                    username: existingUser.username,
+                    name: existingUser.name,
+                    email: existingUser.email
+                }
             });
         }
         else{
@@ -126,4 +132,9 @@ app.post('/users/login/', async (req, res) =>{
         }
     }
 
+})
+
+// Task Create Endpoint
+app.post('/tasks/', async (req, res) => {
+    
 })

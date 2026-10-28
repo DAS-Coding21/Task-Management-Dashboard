@@ -82,6 +82,12 @@ if (signInFormEl) {
 
       if(responseResult.success){
         console.log(responseResult.message);
+
+        localStorage.setItem('userId', responseResult.user.id);
+        localStorage.setItem('userName', responseResult.user.username);
+
+        window.location.href = 'dashboard-section/dashboard.html';
+
         alert(responseResult.message);
       }
       else{

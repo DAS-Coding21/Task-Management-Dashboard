@@ -1,198 +1,324 @@
+/* TaskFlow landing page styles. Load AFTER bootstrap.css (Bootstrap 5).
+   Add to <head>:
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap">
+
+   The sign-in modal is hidden by default. Show it by adding the class "active"
+   to #loginModal in JavaScript (classes "show" and "open" also work):
+     signindBtn.onclick = () => loginModal.classList.add("active");
+     closeLoginBtn.onclick = () => loginModal.classList.remove("active");
+*/
+
 :root {
-  --ink: #f4f3f0;
-  --dim: rgba(244, 243, 240, .60);
-  --line-2: rgba(255, 255, 255, .20);
-  --pad: clamp(20px, 3.4vw, 52px);
+  --tf-ink: #1b2430;
+  --tf-muted: #667085;
+  --tf-paper: #f2f4f1;
+  --tf-surface: #ffffff;
+  --tf-line: #dde2dc;
+  --tf-accent: #2f5bea;
+  --tf-accent-hover: #2447c4;
+  --tf-radius: 14px;
+  --tf-nav-h: 68px;
 }
 
-* { box-sizing: border-box;  padding: 0; margin: 0; }
-a { color: inherit; text-decoration: none;}
+html {
+  scroll-behavior: smooth;
+}
 
-/* Navbar Container */
-.nav {
-  position: relative;
-  z-index: 3;
+body {
+  margin: 0;
+  background: var(--tf-paper);
+  color: var(--tf-ink);
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Navigation ---------- */
+nav.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  padding: clamp(18px, 2.3vw, 28px) var(--pad);
-  background-color: #1f1f21;
+  justify-content: space-between;
+  height: var(--tf-nav-h);
+  margin: 0;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+  background: rgba(242, 244, 241, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--tf-line);
 }
 
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 500;
-  letter-spacing: -.022em;
-  font-size: 20px;
-  flex: 0 0 auto;
-  color: #f4f3f0;
-  text-decoration: none;
-}
-.logo svg {
-  width: 32px;
-  height: 32px;
-  margin-left: 10px;
-}
-
-/* Right Side Actions */
-.navend {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: clamp(12px, 1.6vw, 22px);
-}
-.navend .sign {
-  font-size: 14.5px;
-  color: var(--dim);
-  transition: color .2s ease;
-  text-decoration: none;
-}
-.navend .sign:hover {
-  color: var(--ink);
-}
-
-/* Buttons */
-.btn{
+.nav .logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 999px;
-  font-weight: 500;
-  letter-spacing: -.012em;
-  white-space: nowrap;
-  transition: transform .3s cubic-bezier(.2,.7,.3,1), background .25s ease, border-color .25s ease;
-}
-.btn:active {
-  transform: translateY(1px);
-}
-.btn.sm {
-  font-size: 14px;
-  padding: 9px 17px;
-}
-.btn.solid {
-  background: var(--ink);
-  color: #17171a;
-}
-.btn.solid:hover {
-  background: #fff;
+  gap: 0.6rem;
+  color: var(--tf-ink);
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
 }
 
-/* Responsive query: hide center links on smaller screens */
-@media (max-width: 420px) {
-  .btn{
-    display: none;
-  }
+.nav .logo svg {
+  width: 28px;
+  height: 28px;
+  flex: none;
 }
 
-.hero-section{
-    height: 90vh;
-    background-image: url('../Assets/img/Gemini_Generated_Image_x90od9x90od9x90o.png');
-    background-size: cover;
-    background-position: center;
+.navend {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.hero-section-heading{
-    font-size: 32px;
-    font-weight: bold;
-    font-family: sans-serif;
-
+.navend .btn.sm {
+  padding: 0.45rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
-.hero-section-subheading{
-    font-size: 16px;
-    font-weight: normal;
-    font-family: sans-serif;
+.navend .btn.solid {
+  background: var(--tf-ink);
+  border: 1px solid var(--tf-ink);
+  color: #fff;
 }
 
-/* Modal Overlay (covers whole screen, hidden by default) */
+.navend .btn.solid:hover {
+  background: var(--tf-accent);
+  border-color: var(--tf-accent);
+}
+
+/* ---------- Hero ---------- */
+.hero-section {
+  position: relative;
+  padding-bottom: 6rem;
+  /* faint dot grid, fades out toward the bottom */
+  background-image: radial-gradient(rgba(27, 36, 48, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.hero-section .container {
+  max-width: 900px;
+}
+
+.hero-section-heading {
+  margin-top: clamp(2rem, 8vh, 5rem) !important;
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: clamp(2.4rem, 7vw, 4.75rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--tf-ink) !important;
+}
+
+.hero-section-subheading {
+  max-width: 34rem;
+  margin: 0 auto;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  color: var(--tf-muted) !important;
+  text-wrap: balance;
+}
+
+.hero-section .btn-dark {
+  position: relative;
+  padding: 0.9rem 2.75rem !important;
+  background: var(--tf-ink);
+  border-color: var(--tf-ink);
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.hero-section .btn-dark:hover {
+  background: var(--tf-accent);
+  border-color: var(--tf-accent);
+  transform: translateY(-1px);
+}
+
+/* The link sits inside the button; stretch it so the whole button is clickable */
+.hero-section .btn-dark a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* ---------- Sign-in modal ---------- */
 .modal-overlay {
-    position: fixed;
-    top: 0px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* 80% Semi-transparent dark background */
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    z-index: 1000;
-    
-    /* Hidden state */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(27, 36, 48, 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
-/* When active, show the modal */
-.modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
+.modal-overlay.active,
+.modal-overlay.show,
+.modal-overlay.open {
+  display: flex;
+  animation: tf-fade 0.18s ease-out;
 }
 
-/* The actual login box */
 .modal-card {
-    background: #fff;
-    padding: 10px 20px 20px 20px;
-    width: 98%;
-    max-width: 600px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    position: relative;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem 2rem;
+  background: var(--tf-surface);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(27, 36, 48, 0.28);
+  animation: tf-rise 0.22s ease-out;
 }
 
-.modal-overlay.active .modal-card {
-    transform: translateY(0);
+.modal-card h2 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-/* Close button (X) */
 .close-btn {
-    position: absolute;
-    top: -2px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
-    color: #666;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--tf-muted);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 .close-btn:hover {
-    color: #000;
+  background: var(--tf-paper);
+  color: var(--tf-ink);
 }
 
-/* Form styling inside modal */
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
+@keyframes tf-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
+@keyframes tf-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Sign-up section ---------- */
+.user-registration-section {
+  scroll-margin-top: var(--tf-nav-h);
+  min-height: 100vh;
+}
+
+.user-registration-section .container {
+  max-width: 480px;
+  padding: 2.25rem 2rem 2.5rem;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-line);
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(27, 36, 48, 0.04), 0 12px 32px rgba(27, 36, 48, 0.06);
+}
+
+.user-registration-section h2 {
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Shared form styles (modal + sign-up) ---------- */
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 18px;
-    color: #333;
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tf-ink);
 }
 
-.form-group input {
-    padding: 10px 12px;
-    font-size: 16px;
+.modal-card .form-group + .form-group {
+  margin-top: 1rem;
 }
 
-/* Buttons */
-.submit-btn{
-  width: 80%;
-}
-.btn-submit:hover {
-    background: #0b5ed7;
+.form-group .form-control {
+  height: 48px;
+  padding: 0 0.95rem;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-line);
+  border-radius: 10px;
+  color: var(--tf-ink);
+  font-size: 1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
+.form-group .form-control::placeholder {
+  color: #98a2b3;
+}
 
-/* Registration Section */
-.form-group input {
-    font-size: 19px;
+.form-group .form-control:focus {
+  border-color: var(--tf-accent);
+  box-shadow: 0 0 0 3px rgba(47, 91, 234, 0.2);
+  outline: none;
+}
+
+.submit-btn {
+  --bs-btn-bg: var(--tf-accent);
+  --bs-btn-border-color: var(--tf-accent);
+  --bs-btn-hover-bg: var(--tf-accent-hover);
+  --bs-btn-hover-border-color: var(--tf-accent-hover);
+  --bs-btn-active-bg: var(--tf-accent-hover);
+  --bs-btn-active-border-color: var(--tf-accent-hover);
+  --bs-btn-focus-shadow-rgb: 47, 91, 234;
+  width: 100%;
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(47, 91, 234, 0.55);
+  outline-offset: 2px;
+}
+
+/* ---------- Small screens and motion ---------- */
+@media (max-width: 575.98px) {
+  :root { --tf-nav-h: 60px; }
+
+  .user-registration-section .container {
+    padding: 1.75rem 1.25rem 2rem;
+  }
+
+  .hero-section {
+    padding-bottom: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .modal-overlay.active,
+  .modal-overlay.show,
+  .modal-overlay.open,
+  .modal-card { animation: none; }
+  .hero-section .btn-dark { transition: none; }
 }

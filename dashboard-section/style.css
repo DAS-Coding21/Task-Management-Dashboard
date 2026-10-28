@@ -1,0 +1,242 @@
+/* Import Modern Font */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* navbar */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Navbar Container */
+.nav {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(18px, 2.3vw, 28px) var(--pad);
+  background-color: #1f1f21;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  letter-spacing: -.022em;
+  font-size: 20px;
+  flex: 0 0 auto;
+  color: #f4f3f0;
+  text-decoration: none;
+}
+
+.nav-end svg{
+    color: #ffffff;
+    height: 50px;
+}
+
+.user-name{
+    font-size: 18px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    max-width: 130px;
+    text-align: center;
+}
+
+/* Dashboard Section */
+.task-dashboard-section {
+  --td-ink: #1b2430;
+  --td-muted: #667085;
+  --td-paper: #f2f4f1;
+  --td-surface: #ffffff;
+  --td-line: #dde2dc;
+  --td-accent: #2f5bea;
+  --td-accent-hover: #2447c4;
+  --td-pending: #b86e00;
+  --td-pending-bg: #fff3dc;
+  --td-done: #1f7a4d;
+  --td-done-bg: #dff3e8;
+  --td-radius: 14px;
+
+  min-height: 100vh;
+  background: var(--td-paper);
+  color: var(--td-ink);
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.task-dashboard-section .container {
+  max-width: 880px;
+}
+
+/* ---------- Status cards ---------- */
+.task-dashboard-section .status-card {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--td-surface);
+  border: 1px solid var(--td-line);
+  border-left: 6px solid var(--td-muted);
+  border-radius: var(--td-radius);
+}
+
+.task-dashboard-section .status-card + .status-card {
+  margin-left: 1rem;
+}
+
+/* Colour carries the status: Total is solid ink, Pending amber, Complete green */
+.task-dashboard-section .status-card:nth-child(1) {
+  background: var(--td-ink);
+  border-color: var(--td-ink);
+  color: #fff;
+}
+.task-dashboard-section .status-card:nth-child(1) .status-heading {
+  color: rgba(255, 255, 255, 0.7);
+}
+.task-dashboard-section .status-card:nth-child(2) {
+  border-left-color: var(--td-pending);
+}
+.task-dashboard-section .status-card:nth-child(2) .status-count {
+  color: var(--td-pending);
+}
+.task-dashboard-section .status-card:nth-child(3) {
+  border-left-color: var(--td-done);
+}
+.task-dashboard-section .status-card:nth-child(3) .status-count {
+  color: var(--td-done);
+}
+
+.task-dashboard-section .status-heading {
+  margin: 0 0 0.25rem;
+  font-family: "Figtree", system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--td-muted);
+}
+
+.task-dashboard-section .status-count {
+  margin: 0;
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Add task row ---------- */
+.task-dashboard-section .task-input {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 560px;
+  height: 52px;
+  padding: 0 1rem;
+  background: var(--td-surface);
+  border: 1px solid var(--td-line);
+  border-right: 0;
+  border-radius: var(--td-radius) 0 0 var(--td-radius);
+  color: var(--td-ink);
+  font-size: 1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.task-dashboard-section .task-input::placeholder {
+  color: #98a2b3;
+}
+
+.task-dashboard-section .task-input:focus {
+  outline: none;
+  border-color: var(--td-accent);
+  box-shadow: 0 0 0 3px rgba(47, 91, 234, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.task-dashboard-section .btn-primary {
+  --bs-btn-bg: var(--td-accent);
+  --bs-btn-border-color: var(--td-accent);
+  --bs-btn-hover-bg: var(--td-accent-hover);
+  --bs-btn-hover-border-color: var(--td-accent-hover);
+  --bs-btn-active-bg: var(--td-accent-hover);
+  --bs-btn-active-border-color: var(--td-accent-hover);
+  --bs-btn-focus-shadow-rgb: 47, 91, 234;
+  height: 52px;
+  padding: 0 1.75rem;
+  border-radius: 0 var(--td-radius) var(--td-radius) 0;
+  font-weight: 600;
+}
+
+/* ---------- Task list ---------- */
+.task-dashboard-section .task-list-container {
+  padding: 1.5rem;
+  background: var(--td-surface);
+  border: 1px solid var(--td-line);
+  border-radius: var(--td-radius);
+}
+
+.task-dashboard-section .task-list-container h2 {
+  margin: 0 0 1rem;
+  font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Optional: classes for task rows you add with JavaScript.
+   <div class="task-item"><span class="task-title">Buy milk</span><span class="task-badge">Pending</span></div> */
+.task-dashboard-section .task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--td-line);
+}
+
+.task-dashboard-section .task-title {
+  overflow-wrap: anywhere;
+}
+
+.task-dashboard-section .task-badge {
+  flex: none;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--td-pending-bg);
+  color: var(--td-pending);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.task-dashboard-section .task-item.completed .task-title {
+  color: var(--td-muted);
+  text-decoration: line-through;
+}
+
+.task-dashboard-section .task-item.completed .task-badge {
+  background: var(--td-done-bg);
+  color: var(--td-done);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 575.98px) {
+  .task-dashboard-section .status-card {
+    padding: 0.9rem 0.85rem;
+    border-left-width: 4px;
+  }
+  .task-dashboard-section .status-card + .status-card {
+    margin-left: 0.5rem;
+  }
+  .task-dashboard-section .status-heading {
+    font-size: 0.8rem;
+  }
+  .task-dashboard-section .btn-primary {
+    padding: 0 1.1rem;
+  }
+}

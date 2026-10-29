@@ -59,6 +59,7 @@ if (registrationFormEl) {
 const signInFormEl = document.getElementById('signInForm');
 
 if (signInFormEl) {
+  let userLoginList = [];
   signInFormEl.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -83,8 +84,14 @@ if (signInFormEl) {
       if(responseResult.success){
         console.log(responseResult.message);
 
-        localStorage.setItem('userId', responseResult.user.id);
-        localStorage.setItem('userName', responseResult.user.username);
+        let userLogin = {
+          userId : responseResult.user.id,
+          userName: responseResult.user.username
+        };
+
+        userLoginList.push(userLogin);
+
+        localStorage.setItem("userLoginDetails", JSON.stringify(userLoginList));
 
         window.location.href = 'dashboard-section/dashboard.html';
 

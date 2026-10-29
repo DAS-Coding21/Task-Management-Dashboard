@@ -136,5 +136,25 @@ app.post('/users/login/', async (req, res) =>{
 
 // Task Create Endpoint
 app.post('/tasks/', async (req, res) => {
-    
+    const {userId, taskTitle} = req.body;
+
+    try {
+        const insertTaskQuery = `
+            INSERT INTO tasks (user_id, title, status)
+            VALUES (?, ?, 'pending');
+        `;
+        const result = await db.run(insertTaskQuery, [userId, taskTitle]);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Task created successfully!',
+            task: {
+                userId,
+                taskTitle,
+            }
+        });
+    } catch (error) {
+        console.error('Error creating task:', error);
+        return res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
 })

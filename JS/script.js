@@ -59,7 +59,7 @@ if (registrationFormEl) {
 const signInFormEl = document.getElementById('signInForm');
 
 if (signInFormEl) {
-  let userLoginList = [];
+  let loginList = [];
   signInFormEl.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -89,9 +89,9 @@ if (signInFormEl) {
           userName: responseResult.user.username
         };
 
-        userLoginList.push(userLogin);
+        loginList.push(userLogin);
 
-        localStorage.setItem("userLoginDetails", JSON.stringify(userLoginList));
+        localStorage.setItem("userLoginData", JSON.stringify(loginList));
 
         window.location.href = 'dashboard-section/dashboard.html';
 

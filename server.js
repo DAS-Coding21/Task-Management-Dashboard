@@ -158,3 +158,15 @@ app.post('/tasks/', async (req, res) => {
         return res.status(500).json({ success: false, message: 'Internal server error.' });
     }
 })
+
+// API: Fetch All Tasks for a Specific User
+app.get('/tasks/:userId/', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const query = `SELECT * FROM tasks WHERE user_id = ? ORDER BY id DESC;`;
+        const tasks = await db.all(query, [userId]);
+        res.status(200).json({ success: true, tasks });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+});

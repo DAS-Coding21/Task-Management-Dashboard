@@ -16,7 +16,7 @@
             TaskFlow
         </a>
         <div class="nav-end d-flex align-items-center">
-            <h2 id="userGreeting" class="user-name text-white mt-2">Welcome back! Likun</h2>
+            <h2 id="userGreeting" class="user-name text-white mt-2">Welcome back! <span id="username"></span></h2>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                 <!--!Font Awesome Pro v7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2026 Fonticons, Inc.-->
                 <path
@@ -31,23 +31,23 @@
                     <div class="d-flex ">
                         <div class="status-card">
                             <h2 class="status-heading">Total</h2>
-                            <p class="status-count">0</p>
+                            <p id="totalTasks" class="status-count">0</p>
                         </div>
                         <div class="status-card">
                             <h2 class="status-heading">Pending</h2>
-                            <p class="status-count">0</p>
+                            <p id="pendignTasks" class="status-count">0</p>
                         </div>
                         <div class="status-card">
                             <h2 class="status-heading">Complete</h2>
-                            <p class="status-count">0</p>
+                            <p id="completeTasks" class="status-count">0</p>
                         </div>
                     </div>
                     <div class="mt-5 d-flex justify-content-center">
                         <input type="text" placeholder="Enter task" class="task-input" id="taskInput">
                         <button class="btn btn-primary" id="addBtn">Add</button>
                     </div>
-                    <div class="task-list-container mt-5">
-                        <h2>All Tasks</h2>
+                    <div id="taskListContainer" class="task-list-container mt-5">
+                        <h2>All Tasks</h2>    
                     </div>
                 </div>
             </div>
@@ -60,6 +60,6 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/e4cdf3e801.js" crossorigin="anonymous"></script>
-</body
+</body>
 
 </html>

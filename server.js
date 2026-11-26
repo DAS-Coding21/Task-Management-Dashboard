@@ -185,3 +185,16 @@ app.put("/tasks/:id", async(req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error.' });
     }
 });
+
+
+// Delete Task
+app.delete("/tasks/:id", async(req, res) => {
+    const { id } = req.params;
+    try {
+        const deleteQuery = `DELETE FROM tasks WHERE id = ?;`;
+        const result = await db.run(deleteQuery, [id]);
+        res.status(200).json({ success: true, result });
+    }catch (error) {
+        res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+});

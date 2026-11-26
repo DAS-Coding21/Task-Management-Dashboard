@@ -60,11 +60,43 @@ async function updateTaskStatus(newStatus, task) {
     }
 }
 
+async function deleteTask(task) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/tasks/${task.id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const responseText = await response.text();
+        let taskDetails;
+
+        try {
+            taskDetails = JSON.parse(responseText);
+        } catch (error) {
+            throw new Error(`Server returned invalid JSON: ${responseText}`);
+        }
+
+        if (!response.ok || !taskDetails.success) {
+            throw new Error(taskDetails.message || "Failed to delete task.");
+        }
+
+        const userDetails = localStorage.getItem("userLoginData");
+        const parseUserDetails = JSON.parse(userDetails);
+        await fetchUserTasks(parseUserDetails[0].userId);
+
+    } catch (error) {
+        console.error('Failed to delete task:', error);
+    }
+}
+
 function renderTaskList(tasks) {
     const taskListContainerEl = document.getElementById('taskListContainer');
+    taskListContainerEl.innerHTML = '';
 
     if (tasks.length === 0) {
-        container.innerHTML = `<p>No tasks yet. Add one above!</p>`;
+        taskListContainerEl.innerHTML = `<p>No tasks yet. Add one above!</p>`;
         return;
     }
 
@@ -110,6 +142,10 @@ function renderTaskList(tasks) {
         });
 
         const delBtnEl = document.createElement("button");
+        delBtnEl.addEventListener("click", function(){
+            console.log(task.id);
+            deleteTask(task);
+        })
         taskLabelContainer.appendChild(delBtnEl);
 
         const delIconEl = document.createElement('i');

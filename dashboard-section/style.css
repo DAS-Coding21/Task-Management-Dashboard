@@ -260,6 +260,10 @@ a {
   color: #6d7cb8;
 }
 
+.label-status{
+  text-decoration: line-through;
+}
+
 .checkbox-container {
   height: 30px;
   width: 30px;

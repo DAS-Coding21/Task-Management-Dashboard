@@ -91,17 +91,17 @@ app.post('/users/register/', async (req, res) => {
 });
 
 // Sign In Endpoint
-app.post('/users/login/', async (req, res) =>{
-    const {signInUsernameVal, userPaswordVal} = req.body;
+app.post('/users/login/', async (req, res) => {
+    const { signInUsernameVal, userPaswordVal } = req.body;
 
     const getUserQuery = `SELECT * FROM users WHERE username = ?`;
     const existingUser = await db.get(getUserQuery, [signInUsernameVal]);
 
-    if(!signInUsernameVal || !userPaswordVal){
+    if (!signInUsernameVal || !userPaswordVal) {
         return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
-    if(existingUser === undefined){
+    if (existingUser === undefined) {
         // alert("Invalid User Id");
         return res.status(400).json({
             success: false,
@@ -110,20 +110,20 @@ app.post('/users/login/', async (req, res) =>{
     }
     else {
         const compareHashedPassword = await bcrypt.compare(userPaswordVal, existingUser.password);
-        if(compareHashedPassword === true){
+        if (compareHashedPassword === true) {
             // alert("Login Successfully");
             return res.status(200).json({
                 success: true,
                 message: 'Login Successfully',
                 user: {
-                    id: existingUser.id,          
+                    id: existingUser.id,
                     username: existingUser.username,
                     name: existingUser.name,
                     email: existingUser.email
                 }
             });
         }
-        else{
+        else {
             // alert("Incorrect Password");
             return res.status(400).json({
                 success: false,
@@ -136,7 +136,7 @@ app.post('/users/login/', async (req, res) =>{
 
 // Task Create Endpoint
 app.post('/tasks/', async (req, res) => {
-    const {userId, taskTitle} = req.body;
+    const { userId, taskTitle } = req.body;
 
     try {
         const insertTaskQuery = `
@@ -144,7 +144,6 @@ app.post('/tasks/', async (req, res) => {
             VALUES (?, ?, 'pending');
         `;
         const result = await db.run(insertTaskQuery, [userId, taskTitle]);
-
         return res.status(200).json({
             success: true,
             message: 'Task created successfully!',
@@ -167,6 +166,22 @@ app.get('/tasks/:userId/', async (req, res) => {
         const tasks = await db.all(query, [userId]);
         res.status(200).json({ success: true, tasks });
     } catch (error) {
+        res.status(500).json({ success: false, message: 'Internal server error.' });
+    }
+});
+
+// Update Task Status
+app.put("/tasks/:id", async(req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    console.log(id);
+    console.log(status);
+
+    try {
+        const updateQuery = `UPDATE tasks SET status = ? WHERE id = ?;`;
+        const result = await db.run(updateQuery, [status, id]);
+        res.status(200).json({ success: true, status: status });
+    }catch (error) {
         res.status(500).json({ success: false, message: 'Internal server error.' });
     }
 });

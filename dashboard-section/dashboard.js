@@ -1,8 +1,9 @@
 // Accessing User Task
 const addBtnEl = document.getElementById('addBtn');
 
+
 addBtnEl.addEventListener("click", async () => {
-    const userDetails = localStorage.getItem("userLoginDetails");
+    const userDetails = localStorage.getItem("userLoginData");
     const parseUserDetails = JSON.parse(userDetails);
 
     const userId = parseUserDetails[0].userId;
@@ -33,6 +34,32 @@ addBtnEl.addEventListener("click", async () => {
     }
 })
 
+async function updateTaskStatus(newStatus, task) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/tasks/${task.id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
+            }
+        );
+
+        const StatusResult = await response.json();
+        if (!response.ok || !StatusResult.success) {
+            throw new Error(StatusResult.message || "Failed to update task status.");
+        }
+        console.log(StatusResult);
+
+    } catch (error) {
+        console.error('Failed to update task status:', error);
+    }
+}
+
 function renderTaskList(tasks) {
     const taskListContainerEl = document.getElementById('taskListContainer');
 
@@ -52,7 +79,9 @@ function renderTaskList(tasks) {
 
         const checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
-        checkbox.setAttribute("id", "checkbox");
+        const checkboxStatus = task.id;
+        checkbox.setAttribute("id", checkboxStatus);
+        checkbox.checked = task.status === "completed";
         checkbox.classList.add("checkbox");
         checkboxContainer.appendChild(checkbox);
 
@@ -61,9 +90,24 @@ function renderTaskList(tasks) {
         taskCardEl.appendChild(taskLabelContainer);
 
         const taskLabelEl = document.createElement('label');
-        taskLabelEl.setAttribute("for", "checkbox");
+        taskLabelEl.setAttribute("for", checkboxStatus);
         taskLabelEl.textContent = task.title;
+        if (task.status === "completed") {
+            taskLabelEl.classList.add("label-status");
+        }
         taskLabelContainer.appendChild(taskLabelEl);
+
+        checkbox.addEventListener("change", async () => {
+            const newStatus = checkbox.checked ? "completed" : "pending";
+
+            if (checkbox.checked) {
+                taskLabelEl.classList.add("label-status");
+            } else {
+                taskLabelEl.classList.remove("label-status");
+            }
+
+            await updateTaskStatus(newStatus, task);
+        });
 
         const delBtnEl = document.createElement("button");
         taskLabelContainer.appendChild(delBtnEl);
@@ -86,7 +130,7 @@ function renderTasksStatus(tasks) {
     totalTaskEl.textContent = totalTasks
 
     // 2. Filter tasks where status is 'complete'
-    const completedTasks = tasks.filter(task => task.status === 'complete').length;
+    const completedTasks = tasks.filter(task => task.status === 'completed').length;
     completeTaskEl.textContent = completedTasks;
 
     // 3. Filter tasks where status is 'pending'
@@ -99,7 +143,6 @@ async function fetchUserTasks(userId) {
         // Knocking on the server's door: GET http://localhost:3000/api/tasks/2
         const response = await fetch(`http://localhost:3000/tasks/${userId}`);
         const data = await response.json();
-
         if (data.success) {
             renderTaskList(data.tasks); // Send data to be drawn on screen
             renderTasksStatus(data.tasks); //Send data to count the task based on their status
@@ -115,7 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const parseUserDetails = JSON.parse(userDetails);
 
     const userId = parseUserDetails[0].userId;
+    console.log(userId);
     const userName = parseUserDetails[0].userName;
+    console.log(userName);
 
     // Display user's name in the greeting header if available
     if (userName) {
